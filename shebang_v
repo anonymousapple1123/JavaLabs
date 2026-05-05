@@ -1,0 +1,7 @@
+#!/usr/bin/java --source 26
+public class shebang_v{
+public static void main(String[] args){
+
+	IO.println("Hello "+args[0]+" !");
+}
+}
