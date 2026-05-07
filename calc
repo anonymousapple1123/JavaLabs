@@ -1,0 +1,136 @@
+#!/usr/bin/java --source 26
+public class calc {
+
+    public static double parse_operator(
+        String args,
+        double number1,
+        double number2
+    ) {
+        double result = 0.0;
+        if (args.equals("+")) {
+            result = number1 + number2;
+        } else if (args.equals("-")) {
+            result = number1 - number2;
+        } else if (args.equals("/") && number2 != 0) {
+            result = number1 / number2;
+        } else if (args.equals("*")) {
+            result = number1 * number2;
+        } else {
+            IO.println("Error in operation: check division by 0");
+        }
+        return result;
+    }
+
+    public static double to_num(String args) {
+        double number = 0.0;
+        try {
+            number = Double.parseDouble(args);
+        } catch (NumberFormatException e) {
+            return -1.0;
+        }
+        return number;
+    }
+
+    public static void main(String[] args) {
+        boolean verbose = false;
+        if (args == null) {
+            return;
+        }
+        if (
+            args.length >= 1 &&
+            (args[0].equals("-v") || args[0].equals("--verbose"))
+        ) {
+            verbose = true;
+        }
+        if (args.length < 3 && verbose == false) {
+            IO.println("Use terminal commands to input equation.");
+            return;
+        }
+        if (args.length < 4 && verbose == true) {
+            IO.println(
+                "Use terminal commands to input equation.\nverbose: TRUE"
+            );
+            return;
+        }
+        String operator = "";
+        double result = 0.0;
+        double number1 = 0.0;
+        double number2 = 0.0;
+        int val = 0;
+        if (verbose) {
+            val = 1;
+        }
+
+        // Parsing number #1
+        //double number1 = Double.parseDouble(args[val]);
+        try {
+            number1 = Double.parseDouble(args[val]);
+        } catch (NumberFormatException e) {}
+        if (verbose) IO.println("Number 1 = " + number1);
+        // Parsing number #2
+        try {
+            number2 = Double.parseDouble(args[val + 2]);
+        } catch (NumberFormatException e) {}
+        if (verbose) IO.println("Number 2 = " + number2);
+        if (verbose) IO.println("Operator = " + args[val + 1]);
+
+        // Parsing operator
+
+        if (args[val + 1].equals("+")) {
+            result = number1 + number2;
+        } else if (args[val + 1].equals("-")) {
+            result = number1 - number2;
+        } else if (args[val + 1].equals("/") && number2 != 0) {
+            result = number1 / number2;
+        } else if (args[val + 1].equals("*")) {
+            result = number1 * number2;
+        } else {
+            IO.println("Error in operation: check division by 0");
+        }
+        if (verbose) IO.println("Initial result " + result);
+
+        if (verbose) IO.println(
+            "\n=======================LOOP=======================\n"
+        );
+
+        // loop to iterate on further values
+        if (args.length > 2) {
+            int num = (verbose) ? 4 : 3;
+
+            for (; num < args.length; num++) {
+                if (verbose) IO.println("args[num] : " + args[num]);
+
+                if (verbose && (num % 2 == 0) && to_num(args[num]) == -1.0) {
+                    operator = args[num].substring(0);
+                    if (verbose) IO.println("Operator : " + operator);
+                } else if (
+                    !verbose && (num % 2 != 0) && to_num(args[num]) == -1.0
+                ) {
+                    operator = args[num].substring(0);
+                }
+
+                if (verbose && (num % 2 != 0) && to_num(args[num]) != -1.0) {
+                    result = parse_operator(
+                        operator,
+                        result,
+                        to_num(args[num])
+                    );
+                    if (verbose) IO.println("Result in loop : " + result);
+                } else if (
+                    !verbose && (num % 2 == 0) && to_num(args[num]) != -1.0
+                ) {
+                    result = parse_operator(
+                        operator,
+                        result,
+                        to_num(args[num])
+                    );
+                }
+            }
+        }
+        if (verbose) {
+            IO.println("Final result " + result);
+        } else {
+            IO.println(result);
+        }
+    }
+}

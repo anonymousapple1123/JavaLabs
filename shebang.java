@@ -1,4 +1,4 @@
-public class temp {
+public class shebang {
 
     static final String current_version = "0.0.1";
 
