@@ -1,4 +1,18 @@
-void main(){
+public class temp {
 
-	IO.println("Hello World !");
+    static final String current_version = "0.0.1";
+
+    public static void main(String[] args) {
+        if (args.length != 0) {
+            for (String s : args) {
+                if (s.equals("-v") || s.equals("--version")) {
+                    IO.println(current_version);
+                } else if (s.equals("-h") || s.equals("--help")) {
+                    IO.println("Help is on the way ---");
+                }
+            }
+        } else {
+            IO.println("Welcome to JSON parsor");
+        }
+    }
 }

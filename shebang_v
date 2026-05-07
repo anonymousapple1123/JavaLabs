@@ -1,7 +1,18 @@
 #!/usr/bin/java --source 26
 public class shebang_v{
-public static void main(String[] args){
+static final String current_version = "0.0.1";
 
-	IO.println("Hello "+args[0]+" !");
-}
+    public static void main(String[] args) {
+        if (args.length != 0) {
+            for (String s : args) {
+                if (s.equals("-v") || s.equals("--version")) {
+                    IO.println(current_version);
+                } else if (s.equals("-h") || s.equals("--help")) {
+                    IO.println("Help is on the way ---");
+                }
+            }
+        } else {
+            IO.println("Welcome to JSON parsor");
+        }
+    }
 }
