@@ -1,3 +1,19 @@
+//I have to write this wrapper cause openJDK lacks it.
+//Comment out IO class if using Oracle JDK.
+final class IO {
+
+    private static final java.io.PrintStream out = System.out;
+
+    public static void println(Object o) {
+        out.println(o);
+    }
+
+    public static void println() {
+        out.println();
+    }
+}
+
+//=========================================================================================================== //
 public class calc {
 
     public static double parse_operator(
